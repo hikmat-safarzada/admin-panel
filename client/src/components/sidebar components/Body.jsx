@@ -15,7 +15,7 @@ function SidebarBody() {
       {menuItems.map((item, index) => (
         <div
           key={item}
-          className='w-full h-10 flex items-center justify-between px-3 rounded-xl cursor-pointer text-gray-500 hover:bg-gray-700'
+          className='w-full h-10 flex items-center justify-between px-3 rounded-xl cursor-pointer hover:text-white hover:bg-[#243C7B]'
         >
           <div className="flex items-center gap-2">
             <img

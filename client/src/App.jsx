@@ -1,13 +1,11 @@
 
-import Header from "./components/Top";
-import HeaderComp from "./components/HeaderComp";
-import Sidebar from "./components/Sidebar";
+import Page from "./components/Page";
 
 function App() {
 
   return (
     <>
-      <HeaderComp />
+      <Page />
     </>
   )
 }

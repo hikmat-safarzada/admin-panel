@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Top() {
+function Top({postCount}) {
   return (
     <div className='flex items-center justify-between'>
         <div>
-            <h2 className='font-bold'>News & Announcements</h2>
-            <p>210 posts</p>
+            <h2 className='font-medium text-[24px]'>News & Announcements</h2>
+            <p>{postCount} posts</p>
         </div>
         <div className='flex items-center justify-center gap-2 bg-[#243C7B] w-65 h-10 rounded-[30px]
         text-white' >
