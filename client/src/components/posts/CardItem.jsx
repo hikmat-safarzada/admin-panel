@@ -1,5 +1,5 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
-
+import { IoIosArrowDown } from "react-icons/io";
 function CardItem({ item }) {
   return (
     <tr>
@@ -36,8 +36,16 @@ function CardItem({ item }) {
           {item.status}
         </div>
       </td>
+      <td className="text-center">
+        <div className="flex w-fit mx-auto items-center justify-between gap-6">
+          <div className="flex items-center p-3 gap-2">
+            <div className={`w-2 h-2 rounded-full ${item.publish === "Publish" ? "bg-[#1DB100]" : "bg-[#F57C11]"}`}></div>
+            <p>{item.publish}</p>
+          </div>
+          <IoIosArrowDown size={18} />
+        </div>
+      </td>
       <td className="text-center">{item.author}</td>
-      <td className="text-center">{item.publish}</td>
       <td>
         <div className="w-full flex items-center justify-center gap-3 px-4 py-12">
           <button className="text-blue-600 hover:text-blue-800 cursor-pointer">
