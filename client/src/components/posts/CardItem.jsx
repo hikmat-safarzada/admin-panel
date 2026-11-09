@@ -13,11 +13,11 @@ function CardItem({ item }) {
 
           <div className="flex flex-col gap-1.5">
             <p className="font-bold text-lg">
-              {item.title}
+              {item.title.length > 20 ? item.title.slice(0, 20) + "..." : item.title}
             </p>
 
-            <p className="text-gray-500 text-md line-clamp-3">
-              {item.description}
+            <p className="text-gray-500 text-md">
+              {item.description.length > 80 ? item.description.slice(0, 80) + "..." : item.description}
             </p>
           </div>
         </div>
