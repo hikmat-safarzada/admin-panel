@@ -18,7 +18,7 @@ function Filter() {
                 <CiSearch size={22} className="text-gray-500 shrink-0" />
 
                 <input
-                    type="text"
+                    type="search"
                     placeholder="Search..."
                     className="w-full text-sm outline-none placeholder:text-sm"
                 />

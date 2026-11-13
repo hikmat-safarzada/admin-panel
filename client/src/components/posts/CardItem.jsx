@@ -1,6 +1,6 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-function CardItem({ item }) {
+function CardItem({ item, onDelete, onEdit }) {
   return (
     <tr>
       <td>
@@ -13,11 +13,11 @@ function CardItem({ item }) {
 
           <div className="flex flex-col gap-1.5">
             <p className="font-bold text-lg">
-              {item.title.length > 20 ? item.title.slice(0, 20) + "..." : item.title}
+              {item.title?.length > 20 ? item.title.slice(0, 20) + "..." : item.title}
             </p>
 
             <p className="text-gray-500 text-md">
-              {item.description.length > 80 ? item.description.slice(0, 80) + "..." : item.description}
+              {item.description?.length > 80 ? item.description.slice(0, 80) + "..." : item.description}
             </p>
           </div>
         </div>
@@ -48,11 +48,13 @@ function CardItem({ item }) {
       <td className="text-center">{item.author}</td>
       <td>
         <div className="w-full flex items-center justify-center gap-3 px-4 py-12">
-          <button className="text-blue-600 hover:text-blue-800 cursor-pointer">
+          <button className="text-blue-600 hover:text-blue-800 cursor-pointer"
+          onClick={() => onEdit(item.id)}  >
             <FaEdit size={20} />
           </button>
 
-          <button className="text-red-500 hover:text-red-700 cursor-pointer">
+          <button className="text-red-500 hover:text-red-700 cursor-pointer"
+           onClick={() => onDelete(item.id)} >
             <FaTrash size={20} />
           </button>
         </div>

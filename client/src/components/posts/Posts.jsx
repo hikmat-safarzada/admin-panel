@@ -1,6 +1,6 @@
 import CardItem from './CardItem'
 
-function Posts({ posts }) {
+function Posts({ posts, onDelete, onEdit }) {
     return (
         <div>
             <table className="w-full table-fixed">
@@ -18,7 +18,7 @@ function Posts({ posts }) {
 
                 <tbody className="bg-[#FCFCFC]">
                     {posts.map(post => (
-                        <CardItem key={post.id} item={post} />
+                        <CardItem key={post.id} item={post} onDelete={onDelete} onEdit={onEdit} />
                     ))}
                 </tbody>
             </table>

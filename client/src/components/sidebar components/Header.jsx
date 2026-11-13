@@ -7,10 +7,10 @@ function SidebarHeader() {
       <img
         src={logo}
         alt="NAA Logo"
-        className="w-8 h-8 object-contain"
+        className="w-10 h-10 object-contain"
       />
 
-      <p className="text-sm font-medium">
+      <p className="text-[18px] font-medium">
         NAA Control Panel
       </p>
     </div>

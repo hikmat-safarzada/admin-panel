@@ -1,52 +1,71 @@
 {
   "posts": [
     {
-      "id": 1,
-      "image": "/mock-1.jpg",
-      "title": "Milli Aviasiya Akademiyası",
-      "description": "Milli Aviasiya Akademiyasının təşkilatçılığı ilə həyata keçirilmiş “Pilotsuz Sistemlər: Süni İntellekt, Dizayn və Səmərəlilik” (“International Symposium on Unmanned Systems: AI, Design and Efficiency” - ISUDEF’24) beynəlxalq simpoziumunun materiallar toplusu nüfuzlu Springer Nature nəşriyyatının “Sustainable Aviation” kitab seriyasında “Research and Updates on the Use of Artificial Intelligence in Drone Technology” adı ilə dərc olunub. Bu toplu pilotsuz sistemlər, süni intellekt və aviasiya texnologiyaları sahəsində aparılan ən son elmi tədqiqatları əhatə edir. Topluda yer alan elmi məqalələr Scopus bazasında indekslənəcək və Akademiyanın alim və tədqiqatçılarının beynəlxalq səviyyədə tanınması imkanlarını daha da artıracaq. Kitabla tanış olmaq üçün keçid etməyi unutmayın. linkə",
+      "id": "1",
+      "title": "Milli Aviasiya Akademiyasında yeni tədris layihəsi",
+      "description": "Akademiyada tələbələr üçün yeni təhsil və inkişaf proqramı təqdim olundu.",
+      "image": "/public/mock-1.jpg",
       "category": "News",
       "date": "06/11/2026",
-      "time": "10:19 AM",
       "status": "Active",
       "publish": "Publish",
       "author": "snovruzlu"
     },
     {
-      "id": 2,
-      "image": "/mock-2.jpg",
-      "title": "Milli Aviasiya Akademiyası",
-      "description": "Milli Aviasiya Akademiyasının təşkilatçılığı ilə həyata keçirilmiş “Pilotsuz Sistemlər: Süni İntellekt, Dizayn və Səmərəlilik” (“International Symposium on Unmanned Systems: AI, Design and Efficiency” - ISUDEF’24) beynəlxalq simpoziumunun materiallar toplusu nüfuzlu Springer Nature nəşriyyatının “Sustainable Aviation” kitab seriyasında “Research and Updates on the Use of Artificial Intelligence in Drone Technology” adı ilə dərc olunub. Bu toplu pilotsuz sistemlər, süni intellekt və aviasiya texnologiyaları sahəsində aparılan ən son elmi tədqiqatları əhatə edir. Topluda yer alan elmi məqalələr Scopus bazasında indekslənəcək və Akademiyanın alim və tədqiqatçılarının beynəlxalq səviyyədə tanınması imkanlarını daha da artıracaq. Kitabla tanış olmaq üçün keçid etməyi unutmayın. linkə",
-      "category": "News",
+      "id": "2",
+      "title": "Tələbələr üçün beynəlxalq əməkdaşlıq proqramı",
+      "description": "Akademiya tələbələri beynəlxalq təcrübə proqramında iştirak edə biləcəklər.",
+      "image": "/public/mock-2.jpg",
+      "category": "Announcement",
       "date": "06/11/2026",
-      "time": "10:19 AM",
       "status": "Active",
       "publish": "Publish",
       "author": "snovruzlu"
     },
     {
-      "id": 3,
-      "image": "/mock-3.jpg",
-      "title": "Milli Aviasiya Akademiyası",
-      "description": "Milli Aviasiya Akademiyasının təşkilatçılığı ilə həyata keçirilmiş “Pilotsuz Sistemlər: Süni İntellekt, Dizayn və Səmərəlilik” (“International Symposium on Unmanned Systems: AI, Design and Efficiency” - ISUDEF’24) beynəlxalq simpoziumunun materiallar toplusu nüfuzlu Springer Nature nəşriyyatının “Sustainable Aviation” kitab seriyasında “Research and Updates on the Use of Artificial Intelligence in Drone Technology” adı ilə dərc olunub. Bu toplu pilotsuz sistemlər, süni intellekt və aviasiya texnologiyaları sahəsində aparılan ən son elmi tədqiqatları əhatə edir. Topluda yer alan elmi məqalələr Scopus bazasında indekslənəcək və Akademiyanın alim və tədqiqatçılarının beynəlxalq səviyyədə tanınması imkanlarını daha da artıracaq. Kitabla tanış olmaq üçün keçid etməyi unutmayın. linkə",
+      "id": "3",
+      "title": "Bələbələr üçün beynəlxalq əməkdaşlıq proqramı",
+      "description": "Akademiya tələbələri beynəlxalq təcrübə proqramında iştirak edə biləcəklər.",
+      "image": "/public/mock-3.jpg",
       "category": "Announcement",
       "date": "06/11/2026",
-      "time": "10:19 AM",
-      "status": "Inactive",
+      "status": "Active",
       "publish": "Publish",
       "author": "snovruzlu"
     },
     {
-      "id": 4,
-      "image": "/mock-4.jpg",
-      "title": "Milli Aviasiya Akademiyası",
-      "description": "Milli Aviasiya Akademiyasının təşkilatçılığı ilə həyata keçirilmiş “Pilotsuz Sistemlər: Süni İntellekt, Dizayn və Səmərəlilik” (“International Symposium on Unmanned Systems: AI, Design and Efficiency” - ISUDEF’24) beynəlxalq simpoziumunun materiallar toplusu nüfuzlu Springer Nature nəşriyyatının “Sustainable Aviation” kitab seriyasında “Research and Updates on the Use of Artificial Intelligence in Drone Technology” adı ilə dərc olunub. Bu toplu pilotsuz sistemlər, süni intellekt və aviasiya texnologiyaları sahəsində aparılan ən son elmi tədqiqatları əhatə edir. Topluda yer alan elmi məqalələr Scopus bazasında indekslənəcək və Akademiyanın alim və tədqiqatçılarının beynəlxalq səviyyədə tanınması imkanlarını daha da artıracaq. Kitabla tanış olmaq üçün keçid etməyi unutmayın. linkə",
+      "id": "4",
+      "title": "Universitetdə elmi konfrans keçiriləcək",
+      "description": "Elmi konfransda müəllimlər və tələbələr öz tədqiqat işlərini təqdim edəcəklər.",
+      "image": "/public/mock-4.jpg",
       "category": "Announcement",
       "date": "06/11/2026",
-      "time": "10:19 AM",
-      "status": "Inactive",
-      "publish": "Draft",
+      "status": "Active",
+      "publish": "Publish",
+      "author": "snovruzlu"
+    },
+    {
+      "id": "5",
+      "title": "Tələbələrin diqqətinə: imtahan cədvəli",
+      "description": "Payız semestrinin imtahan cədvəli artıq elan olunub.",
+      "image": "/public/mock-2.jpg",
+      "category": "Announcement",
+      "date": "06/11/2026",
+      "status": "Active",
+      "publish": "Publish",
+      "author": "snovruzlu"
+    },
+    {
+      "id": "6",
+      "title": "Akademiyada yeni tədbir təşkil olunacaq",
+      "description": "Tələbələrin iştirakı ilə müxtəlif təqdimatlar və maraqlı fəaliyyətlər keçiriləcək.",
+      "image": "/public/mock-1.jpg",
+      "category": "News",
+      "date": "06/11/2026",
+      "status": "Active",
+      "publish": "Publish",
       "author": "snovruzlu"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
