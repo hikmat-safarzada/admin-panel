@@ -4,7 +4,7 @@
       "title": "Tələbələr üçün beynəlxalq əməkdaşlıq proqramı",
       "url": "",
       "category": "Announcement",
-      "description": "Akademiya tələbələri beynəlxalq təcrübə proqramında iştirak edə biləcəklər.",
+      "description": "<h3><strong><em><u>Akademiya tələbələri beynəlxalq təcrübə proqramında iştirak edə biləcəklər.</u></em></strong></h3><p></p>",
       "coverImage": "/public/mock-2.jpg",
       "galleryImages": [],
       "status": "Active",
@@ -67,22 +67,6 @@
       "date": "15/11/2026",
       "time": "09:28 PM",
       "id": "6"
-    },
-    {
-      "title": "ertetertretertretertttetr",
-      "url": "",
-      "category": "News",
-      "description": "<p>5464645654654654</p>",
-      "coverImage": "blob:http://localhost:5173/11ffa902-8ec6-4bd6-a024-19a03ff6ebc2",
-      "galleryImages": [
-        "blob:http://localhost:5173/6ee37fff-70d9-4a9a-9bb8-271ba4492ff3"
-      ],
-      "status": "Active",
-      "publish": "Publish",
-      "author": "snovruzlu",
-      "date": "15/11/2026",
-      "time": "11:21 PM",
-      "id": "Wq-8wbapf04"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

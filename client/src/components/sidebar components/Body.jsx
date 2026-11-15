@@ -5,7 +5,7 @@ import { BsCloudSun, BsBank } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 function SidebarBody() {
-  // Hansı menyunun açıq olduğunu idarə etmək üçün state (məsələn, standart olaraq 'NAA Website' açıqdır)
+
   const [openMenu, setOpenMenu] = useState('NAA Website')
 
   const toggleMenu = (menuName) => {
@@ -15,7 +15,6 @@ function SidebarBody() {
   return (
     <div className="flex flex-col gap-3 px-3 pt-5">
 
-      {/* 1. NAA Website Menu */}
       <div className="flex flex-col">
         <div 
           onClick={() => toggleMenu('NAA Website')}
@@ -32,7 +31,6 @@ function SidebarBody() {
           {openMenu === 'NAA Website' ? <IoIosArrowUp size={18} /> : <IoIosArrowDown size={18} />}
         </div>
 
-        {/* Submenu Items (Açılan alt menyular) */}
         {openMenu === 'NAA Website' && (
           <div className="flex flex-col pl-9 pt-2 gap-2 text-sm text-[#787486]">
             <p className="cursor-pointer hover:text-[#243C7B] font-medium text-[#243C7B]">Post</p>
@@ -42,7 +40,7 @@ function SidebarBody() {
         )}
       </div>
 
-      {/* 2. Library Menu */}
+
       <div className="flex flex-col">
         <div 
           onClick={() => toggleMenu('Library')}
@@ -67,7 +65,6 @@ function SidebarBody() {
         )}
       </div>
 
-      {/* 3. Meteorology Menu */}
       <div className="flex flex-col">
         <div 
           onClick={() => toggleMenu('Meteorology')}
@@ -92,7 +89,6 @@ function SidebarBody() {
         )}
       </div>
 
-      {/* 4. Museum Menu */}
       <div className="flex flex-col">
         <div 
           onClick={() => toggleMenu('Museum')}

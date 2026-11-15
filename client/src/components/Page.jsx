@@ -80,7 +80,6 @@ function Page() {
         })
         const data = await res.json()
         setPosts(prev => prev.map(post => post.id === id ? data : post))
-        return true
     }
     const filteredPosts = posts.filter(post => {
         const categoryMatch =

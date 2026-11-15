@@ -18,7 +18,6 @@ function CardItem({ item, onDelete, onEdit }) {
               </p>
 
               <p className="text-gray-500 text-md">
-                {/* replace(/<[^>]*>?/gm, '') - bütün HTML tağlarını silir, yalnız saf mətni saxlayır */}
                 {item.description?.replace(/<[^>]*>?/gm, '').length > 80
                   ? item.description.replace(/<[^>]*>?/gm, '').slice(0, 80) + "..."
                   : item.description?.replace(/<[^>]*>?/gm, '')}

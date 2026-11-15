@@ -6,7 +6,7 @@ import Underline from '@tiptap/extension-underline'
 import { useEffect } from 'react'
 import {
   Bold, Italic, Underline as UnderlineIcon,
-  Heading1, Heading2, Heading3, Pilcrow,
+  Heading1, Heading2, Heading3,
   AlignLeft, AlignCenter, AlignRight,
   List, ListOrdered, Link as LinkIcon, Eraser
 } from 'lucide-react'
@@ -37,7 +37,7 @@ function RichTextEditor({ value, onChange }) {
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-      {/* Toolbar */}
+  
       <div className="flex items-center gap-1 p-2 border-b bg-gray-50/50 text-gray-600 overflow-x-auto whitespace-nowrap">
 
         <button
@@ -74,7 +74,7 @@ function RichTextEditor({ value, onChange }) {
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           className={`px-2 py-1 text-xs font-semibold rounded hover:bg-gray-200 transition ${editor.isActive('heading', { level: 1 }) ? 'bg-gray-200 text-black' : ''}`}
         >
-          H1
+          <Heading1/>
         </button>
 
         <button
@@ -82,7 +82,7 @@ function RichTextEditor({ value, onChange }) {
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           className={`px-2 py-1 text-xs font-semibold rounded hover:bg-gray-200 transition ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-200 text-black' : ''}`}
         >
-          H2
+          <Heading2/>
         </button>
 
         <button
@@ -90,7 +90,7 @@ function RichTextEditor({ value, onChange }) {
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           className={`px-2 py-1 text-xs font-semibold rounded hover:bg-gray-200 transition ${editor.isActive('heading', { level: 3 }) ? 'bg-gray-200 text-black' : ''}`}
         >
-          H3
+          <Heading3/>
         </button>
 
         <button
@@ -175,10 +175,20 @@ function RichTextEditor({ value, onChange }) {
 
       </div>
 
-      {/* Editor Content */}
+      
       <EditorContent
         editor={editor}
-        className="min-h-[200px] p-4 text-sm text-gray-700 [&_.tiptap]:outline-none [&_.tiptap]:min-h-[180px]"
+        className="
+    min-h-[200px] p-4 text-sm text-gray-700
+    [&_.tiptap]:outline-none
+    [&_.tiptap]:min-h-[180px]
+    [&_.tiptap_h1]:text-3xl
+    [&_.tiptap_h1]:font-bold
+    [&_.tiptap_h2]:text-2xl
+    [&_.tiptap_h2]:font-bold
+    [&_.tiptap_h3]:text-xl
+    [&_.tiptap_h3]:font-semibold
+  "
       />
     </div>
   )

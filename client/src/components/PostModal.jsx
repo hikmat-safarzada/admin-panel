@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5'
 import { FaRegImage, FaRegTrashAlt } from 'react-icons/fa'
 import { LuUpload } from 'react-icons/lu'
 import { HiOutlineNewspaper, HiOutlineSpeakerphone } from 'react-icons/hi'
-import TextEditor from '../components/TextEditor'
+import TextEditor from '../components/RichTextEditor'
 import Success from './Success'
 
 function PostModal({
@@ -95,7 +95,7 @@ function PostModal({
   const [success, setSuccess] = useState(false)
 
   const handleSubmit = async () => {
-    try {
+
       const now = new Date()
 
       const formData = {
@@ -124,9 +124,6 @@ function PostModal({
       if (result !== false) {
         setSuccess(true)
       }
-    } catch (error) {
-      console.error('Operation failed:', error)
-    }
   }
 
   return (
@@ -140,7 +137,6 @@ function PostModal({
       ) : (
         <div className="relative w-full max-w-[620px] max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6">
 
-          {/* TOP */}
           <div className="flex justify-between mb-5">
             <div className="flex gap-2">
               {['AZ', 'EN'].map(lang => (
@@ -168,7 +164,6 @@ function PostModal({
             </button>
           </div>
 
-          {/* HEADING */}
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">{modalTitle}</h2>
             <span className="text-lg text-[#243C7B] font-medium">
@@ -176,7 +171,6 @@ function PostModal({
             </span>
           </div>
 
-          {/* PROGRESS */}
           <div className="flex gap-1 mb-6">
             <div className="w-1/2 h-1.5 rounded-full bg-[#243C7B]" />
             <div
@@ -185,11 +179,9 @@ function PostModal({
             />
           </div>
 
-          {/* STEP 1 */}
           {step === 1 && (
             <div className="flex flex-col gap-4">
 
-              {/* TITLE */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-700">
                   {t.title}
@@ -204,7 +196,6 @@ function PostModal({
                 />
               </div>
 
-              {/* URL */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-700">
                   {t.url}
@@ -225,7 +216,6 @@ function PostModal({
                 </div>
               </div>
 
-              {/* CATEGORY */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-700">
                   {t.category}
@@ -267,7 +257,6 @@ function PostModal({
                 </div>
               </div>
 
-              {/* COVER IMAGE */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-700">
                   {t.coverImage}
@@ -329,7 +318,6 @@ function PostModal({
                 )}
               </div>
 
-              {/* DESCRIPTION */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-700">
                   {t.description}
@@ -355,7 +343,6 @@ function PostModal({
             </div>
           )}
 
-          {/* STEP 2 */}
           {step === 2 && (
             <div className="flex flex-col min-h-[420px]">
               <div className="flex flex-col gap-2">
@@ -427,7 +414,6 @@ function PostModal({
                 )}
               </div>
 
-              {/* ACTIONS */}
               <div className="flex justify-between items-center mt-auto pt-8">
                 <button
                   type="button"
