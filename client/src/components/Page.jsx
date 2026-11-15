@@ -7,7 +7,7 @@ import CreatePost from './crud/CreatePost'
 import DeletePost from './crud/DeletePost'
 import Edit from './crud/Edit'
 import Pagination from './Pagination'
-const baseUrl = 'http://localhost:3000/posts'
+const baseUrl = 'https://admin-panel-5ajn.onrender.com/posts'
 
 function Page() {
     const [posts, setPosts] = useState([])
