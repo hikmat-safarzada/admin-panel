@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5'
 import { FaRegImage, FaRegTrashAlt } from 'react-icons/fa'
 import { LuUpload } from 'react-icons/lu'
 import { HiOutlineNewspaper, HiOutlineSpeakerphone } from 'react-icons/hi'
-import TextEditor from '../components/RichTextEditor'
+import TextEditor from './RichTextEditor'
 import Success from './Success'
 
 function PostModal({
@@ -15,6 +15,9 @@ function PostModal({
   operation
 }) {
   const [language, setLanguage] = useState('EN')
+  const [step, setStep] = useState(1)
+  const [success, setSuccess] = useState(false)
+  const [errors, setErrors] = useState({})
 
   const translations = {
     AZ: {
@@ -28,7 +31,7 @@ function PostModal({
       coverImage: 'Əsas şəkil',
       uploadCover: 'Əsas şəkli yüklə',
       description: 'Məzmun',
-      editorInfo: 'Mətninizi qalın, kursiv, başlıqlar, siyahılar və digər üslublarla formatlamaq üçün alətlər panelindən istifadə edin.',
+      editorInfo: 'Mətninizi formatlamaq üçün alətlər panelindən istifadə edin.',
       next: 'Növbəti',
       gallery: 'Qalereya şəkilləri',
       galleryInfo: 'JPG/PNG, bir neçə şəkil seçə bilərsiniz',
@@ -47,7 +50,7 @@ function PostModal({
       coverImage: 'Cover Image',
       uploadCover: 'Upload Cover Image',
       description: 'Description',
-      editorInfo: 'Use the toolbar to format your text with bold, italic, headers, lists, and more.',
+      editorInfo: 'Use the toolbar to format your text.',
       next: 'Next',
       gallery: 'Gallery Images',
       galleryInfo: 'JPG/PNG, multiple images allowed',
@@ -59,75 +62,89 @@ function PostModal({
 
   const t = translations[language]
 
-  const [step, setStep] = useState(1)
   const [title, setTitle] = useState(initialData?.title || '')
   const [url, setUrl] = useState(initialData?.url || initialData?.slug || '')
   const [category, setCategory] = useState(initialData?.category || 'News')
+  const [description, setDescription] = useState(initialData?.description || '')
 
   const [coverImage, setCoverImage] = useState(
-    initialData?.coverImage
-      ? {
-        file: null,
-        preview: initialData.coverImage,
-        name:
-          typeof initialData.coverImage === 'string'
-            ? initialData.coverImage.split('/').pop()
-            : 'Cover Image'
-      }
-      : null
-  )
-
-  const [description, setDescription] = useState(
-    initialData?.description || ''
+    initialData?.coverImage || null
   )
 
   const [galleryImages, setGalleryImages] = useState(
-    (initialData?.galleryImages || []).map(image => ({
-      file: null,
-      preview: image,
-      name:
-        typeof image === 'string'
-          ? image.split('/').pop()
-          : 'Gallery Image'
-    }))
+    initialData?.galleryImages || []
   )
 
-  const [success, setSuccess] = useState(false)
+  const validateForm = () => {
+    const newErrors = {}
+
+    if (!title.trim()) {
+      newErrors.title = 'Title is required'
+    }
+
+    if (!url.trim()) {
+      newErrors.url = 'URL is required'
+    }
+
+    if (!category) {
+      newErrors.category = 'Select a category'
+    }
+
+    if (!coverImage) {
+      newErrors.coverImage = 'Cover image is required'
+    }
+
+    const plainDescription = description
+      .replace(/<[^>]*>/g, '')
+      .trim()
+
+    if (!plainDescription) {
+      newErrors.description = 'Description is required'
+    }
+
+    setErrors(newErrors)
+
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleSubmit = async () => {
+    const now = new Date()
 
-      const now = new Date()
+    const formData = {
+      title,
+      url,
+      category,
+      description,
+      coverImage: coverImage || '/mock-1.jpg',
+      galleryImages,
+      status: initialData?.status || 'Active',
+      publish: initialData?.publish || 'Publish',
+      author: initialData?.author || 'snovruzlu',
+      date: initialData?.date || now.toLocaleDateString('en-GB'),
+      time: initialData?.time || now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    }
 
-      const formData = {
-        title,
-        url,
-        category,
-        description,
-        coverImage: coverImage?.preview || '/public/mock-1.jpg',
-        galleryImages: galleryImages.map(image => image.preview),
-        status: initialData?.status || 'Active',
-        publish: initialData?.publish || 'Publish',
-        author: initialData?.author || 'snovruzlu',
-        date: initialData?.date || now.toLocaleDateString('en-GB'),
-        time:
-          initialData?.time ||
-          now.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit'
-          })
-      }
+    const result = initialData
+      ? await onSubmit(initialData.id ?? initialData._id, formData)
+      : await onSubmit(formData)
 
-      const result = initialData
-        ? await onSubmit(initialData.id ?? initialData._id, formData)
-        : await onSubmit(formData)
+    if (result !== false) {
+      setSuccess(true)
+    }
+  }
 
-      if (result !== false) {
-        setSuccess(true)
-      }
+  const handleNext = () => {
+    if (validateForm()) {
+      setStep(2)
+    }
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+
       {success ? (
         <Success
           operation={operation}
@@ -144,10 +161,11 @@ function PostModal({
                   key={lang}
                   type="button"
                   onClick={() => setLanguage(lang)}
-                  className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs ${language === lang
-                    ? ' text-black border-[#243C7B]'
-                    : 'bg-white text-gray-500 border-gray-200'
-                    }`}
+                  className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs ${
+                    language === lang
+                      ? 'text-black border-[#243C7B]'
+                      : 'bg-white text-gray-500 border-gray-200'
+                  }`}
                 >
                   <img
                     src={lang === 'AZ' ? '/flags/AZ flag.svg' : '/flags/UK flag.svg'}
@@ -173,10 +191,9 @@ function PostModal({
 
           <div className="flex gap-1 mb-6">
             <div className="w-1/2 h-1.5 rounded-full bg-[#243C7B]" />
-            <div
-              className={`w-1/2 h-1.5 rounded-full ${step === 2 ? 'bg-[#243C7B]' : 'bg-[#DCE5F5]'
-                }`}
-            />
+            <div className={`w-1/2 h-1.5 rounded-full ${
+              step === 2 ? 'bg-[#243C7B]' : 'bg-[#DCE5F5]'
+            }`} />
           </div>
 
           {step === 1 && (
@@ -190,10 +207,19 @@ function PostModal({
                 <input
                   type="text"
                   value={title}
-                  onChange={e => setTitle(e.target.value)}
+                  onChange={e => {
+                    setTitle(e.target.value)
+                    setErrors(prev => ({ ...prev, title: '' }))
+                  }}
                   placeholder={t.titlePlaceholder}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 placeholder:text-gray-400 outline-none transition-all focus:border-[#243C7B] focus:ring-2 focus:ring-[#243C7B]/10"
+                  className={`w-full border rounded-xl px-4 py-3 text-sm outline-none ${
+                    errors.title ? 'border-red-500' : 'border-gray-200'
+                  }`}
                 />
+
+                {errors.title && (
+                  <p className="text-red-500 text-xs">{errors.title}</p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
@@ -201,7 +227,9 @@ function PostModal({
                   {t.url}
                 </label>
 
-                <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden transition-all focus-within:border-[#243C7B] focus-within:ring-2 focus-within:ring-[#243C7B]/10">
+                <div className={`flex items-center border rounded-xl overflow-hidden ${
+                  errors.url ? 'border-red-500' : 'border-gray-200'
+                }`}>
                   <span className="bg-gray-50 border-r border-gray-200 px-3 py-3 text-sm text-gray-400">
                     https://
                   </span>
@@ -209,11 +237,18 @@ function PostModal({
                   <input
                     type="text"
                     value={url}
-                    onChange={e => setUrl(e.target.value)}
+                    onChange={e => {
+                      setUrl(e.target.value)
+                      setErrors(prev => ({ ...prev, url: '' }))
+                    }}
                     placeholder={t.urlPlaceholder}
-                    className="w-full px-3 py-3 text-sm text-gray-700 placeholder:text-gray-400 outline-none bg-white"
+                    className="w-full px-3 py-3 text-sm outline-none"
                   />
                 </div>
+
+                {errors.url && (
+                  <p className="text-red-500 text-xs">{errors.url}</p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
@@ -236,25 +271,32 @@ function PostModal({
                   ].map(catItem => (
                     <label
                       key={catItem.name}
-                      className={`flex items-center gap-2 border rounded-full px-5 py-2.5 cursor-pointer text-sm font-medium transition-colors ${category === catItem.name
-                        ? 'bg-[#1447E6] text-white border-[#1447E6]'
-                        : 'border-[#1447E6] text-[#1447E6] bg-white'
-                        }`}
+                      className={`flex items-center gap-2 border rounded-full px-5 py-2.5 cursor-pointer text-sm font-medium ${
+                        category === catItem.name
+                          ? 'bg-[#1447E6] text-white border-[#1447E6]'
+                          : 'border-[#1447E6] text-[#1447E6] bg-white'
+                      }`}
                     >
                       <input
                         type="radio"
                         name="category"
                         value={catItem.name}
                         checked={category === catItem.name}
-                        onChange={e => setCategory(e.target.value)}
+                        onChange={e => {
+                          setCategory(e.target.value)
+                          setErrors(prev => ({ ...prev, category: '' }))
+                        }}
                         className="hidden"
                       />
-
                       {catItem.icon}
                       {catItem.label}
                     </label>
                   ))}
                 </div>
+
+                {errors.category && (
+                  <p className="text-red-500 text-xs">{errors.category}</p>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
@@ -263,8 +305,10 @@ function PostModal({
                 </label>
 
                 {!coverImage && (
-                  <label className="flex items-center justify-center gap-2 border border-gray-200 rounded-xl py-4 cursor-pointer text-sm text-gray-500 hover:border-[#243C7B] bg-white shadow-sm transition">
-                    <FaRegImage size={18} className="text-gray-400" />
+                  <label className={`flex items-center justify-center gap-2 border rounded-xl py-4 cursor-pointer text-sm text-gray-500 ${
+                    errors.coverImage ? 'border-red-500' : 'border-gray-200'
+                  }`}>
+                    <FaRegImage size={18} />
                     <span>{t.uploadCover}</span>
 
                     <input
@@ -275,11 +319,8 @@ function PostModal({
                         const file = e.target.files[0]
 
                         if (file) {
-                          setCoverImage({
-                            file,
-                            preview: URL.createObjectURL(file),
-                            name: file.name
-                          })
+                          setCoverImage(URL.createObjectURL(file))
+                          setErrors(prev => ({ ...prev, coverImage: '' }))
                         }
 
                         e.target.value = ''
@@ -288,32 +329,26 @@ function PostModal({
                   </label>
                 )}
 
+                {errors.coverImage && (
+                  <p className="text-red-500 text-xs">{errors.coverImage}</p>
+                )}
+
                 {coverImage && (
                   <div className="flex flex-col gap-2 mt-1">
                     <img
-                      src={coverImage.preview}
+                      src={coverImage}
                       alt="Cover preview"
-                      className="w-36 h-24 object-cover rounded-xl border border-gray-200 shadow-sm"
+                      className="w-36 h-24 object-cover rounded-xl border border-gray-200"
                     />
 
-                    <div className="flex items-center justify-between w-fit gap-3 border border-green-500 bg-white text-green-600 px-3 py-1.5 rounded-full text-xs shadow-sm">
-                      <span className="max-w-[150px] truncate">
-                        {coverImage.name || coverImage.file?.name || 'Cover Image'}
-                      </span>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (coverImage.file) {
-                            URL.revokeObjectURL(coverImage.preview)
-                          }
-                          setCoverImage(null)
-                        }}
-                        className="text-green-600 hover:text-red-500 font-bold flex items-center justify-center"
-                      >
-                        <IoClose size={14} />
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setCoverImage(null)}
+                      className="flex items-center gap-2 text-red-500 text-xs w-fit"
+                    >
+                      <IoClose size={16} />
+                      Remove image
+                    </button>
                   </div>
                 )}
               </div>
@@ -323,20 +358,25 @@ function PostModal({
                   {t.description}
                 </label>
 
-                <p className="text-xs text-gray-400">
-                  {t.editorInfo}
-                </p>
+                <p className="text-xs text-gray-400">{t.editorInfo}</p>
 
                 <TextEditor
                   value={description}
-                  onChange={setDescription}
+                  onChange={value => {
+                    setDescription(value)
+                    setErrors(prev => ({ ...prev, description: '' }))
+                  }}
                 />
+
+                {errors.description && (
+                  <p className="text-red-500 text-xs">{errors.description}</p>
+                )}
               </div>
 
               <button
                 type="button"
-                onClick={() => setStep(2)}
-                className="w-full bg-[#243C7B] hover:bg-[#1a2d5e] text-white rounded-xl py-3 mt-2 text-sm font-medium transition"
+                onClick={handleNext}
+                className="w-full bg-[#243C7B] hover:bg-[#1a2d5e] text-white rounded-xl py-3 mt-2 text-sm font-medium"
               >
                 {t.next}
               </button>
@@ -350,15 +390,11 @@ function PostModal({
                   {t.gallery}
                 </label>
 
-                <p className="text-xs text-gray-400">
-                  {t.galleryInfo}
-                </p>
+                <p className="text-xs text-gray-400">{t.galleryInfo}</p>
 
-                <label className="h-44 border border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer text-gray-400 hover:border-[#243C7B] bg-white transition">
-                  <LuUpload size={32} className="text-gray-500" />
-                  <span className="text-xs text-gray-500">
-                    {t.upload}
-                  </span>
+                <label className="h-44 border border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer text-gray-400 hover:border-[#243C7B]">
+                  <LuUpload size={32} />
+                  <span className="text-xs">{t.upload}</span>
 
                   <input
                     type="file"
@@ -367,14 +403,9 @@ function PostModal({
                     className="hidden"
                     onChange={e => {
                       const files = Array.from(e.target.files)
+                      const images = files.map(file => URL.createObjectURL(file))
 
-                      const newImages = files.map(file => ({
-                        file,
-                        preview: URL.createObjectURL(file),
-                        name: file.name
-                      }))
-
-                      setGalleryImages(prev => [...prev, ...newImages])
+                      setGalleryImages(prev => [...prev, ...images])
                       e.target.value = ''
                     }}
                   />
@@ -388,7 +419,7 @@ function PostModal({
                         className="relative group w-35 h-25 rounded-xl overflow-hidden border border-gray-200 shadow-sm"
                       >
                         <img
-                          src={image.preview}
+                          src={image}
                           alt=""
                           className="w-full h-full object-cover"
                         />
@@ -396,15 +427,11 @@ function PostModal({
                         <button
                           type="button"
                           onClick={() => {
-                            if (image.file) {
-                              URL.revokeObjectURL(image.preview)
-                            }
-
                             setGalleryImages(prev =>
                               prev.filter((_, i) => i !== index)
                             )
                           }}
-                          className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center text-red-500 shadow hover:bg-red-50 transition"
+                          className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center text-red-500 shadow"
                         >
                           <FaRegTrashAlt size={12} />
                         </button>
@@ -418,7 +445,7 @@ function PostModal({
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="px-6 py-3 text-sm text-gray-600 font-medium hover:text-black transition"
+                  className="px-6 py-3 text-sm text-gray-600 font-medium"
                 >
                   {t.back}
                 </button>
@@ -426,7 +453,7 @@ function PostModal({
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="bg-[#243C7B] hover:bg-[#1a2d5e] text-white rounded-xl px-10 py-3 text-sm font-medium transition"
+                  className="bg-[#243C7B] hover:bg-[#1a2d5e] text-white rounded-xl px-10 py-3 text-sm font-medium"
                 >
                   {t.submit}
                 </button>
