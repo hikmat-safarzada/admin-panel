@@ -6,6 +6,7 @@ import Posts from './posts/Posts'
 import CreatePost from './crud/CreatePost'
 import DeletePost from './crud/DeletePost'
 import Edit from './crud/Edit'
+import Pagination from './Pagination'
 const baseUrl = 'http://localhost:3000/posts'
 
 function Page() {
@@ -14,6 +15,12 @@ function Page() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const [selectedPostId, setSelectedPostId] = useState(null)
+    const [category, setCategory] = useState('All Posts')
+    const [status, setStatus] = useState('All Status')
+    const [search, setSearch] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [postsPerPage, setPostsPerPage] = useState(10)
+
     useEffect(() => {
         const getPosts = async () => {
             const res = await fetch(baseUrl)
@@ -23,6 +30,10 @@ function Page() {
         }
         getPosts()
     }, [])
+
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [category, status, search])
 
     const createPosts = async (newPost) => {
         const res = await fetch(baseUrl, {
@@ -71,14 +82,41 @@ function Page() {
         setPosts(prev => prev.map(post => post.id === id ? data : post))
         return true
     }
+    const filteredPosts = posts.filter(post => {
+        const categoryMatch =
+            category === 'All Posts' || post.category === category
+
+        const statusMatch =
+            status === 'All Status' || post.status === status
+
+        const searchMatch = (post.title || '').toLowerCase().includes(search.toLowerCase())
+        return categoryMatch && statusMatch && searchMatch
+    })
+    const totalPages = Math.ceil(filteredPosts.length / postsPerPage)
+    const lastPostIndex = currentPage * postsPerPage
+    const firstPostIndex = lastPostIndex - postsPerPage
+    const currentPosts = filteredPosts.slice(firstPostIndex, lastPostIndex)
     return (
         <div className='flex items-start gap-6'>
             <Sidebar />
 
             <div className='flex flex-col gap-6 p-5 w-full'>
                 <Top postCount={posts.length} onAddClick={setIsModalOpen} />
-                <Filter />
-                <Posts posts={posts} onDelete={handleDelete} onEdit={handleEdit} />
+                <Filter
+                    category={category}
+                    setCategory={setCategory}
+                    status={status}
+                    setStatus={setStatus}
+                    search={search}
+                    setSearch={setSearch}
+                />
+                <Posts posts={currentPosts} onDelete={handleDelete} onEdit={handleEdit} />
+                <Pagination currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={totalPages}
+                    postsPerPage={postsPerPage}
+                    setPostsPerPage={setPostsPerPage}
+                />
             </div>
 
             {
@@ -99,10 +137,10 @@ function Page() {
             }
             {
                 isEditModalOpen && (
-                    <Edit 
-                    item={posts.find(post => post.id === selectedPostId)}
-                    onClose={() => setIsEditModalOpen(false)} 
-                    onSubmit={editPost} />
+                    <Edit
+                        item={posts.find(post => post.id === selectedPostId)}
+                        onClose={() => setIsEditModalOpen(false)}
+                        onSubmit={editPost} />
                 )
             }
         </div>
